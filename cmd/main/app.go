@@ -82,8 +82,9 @@ func startServer() {
 
 func main() {
 	log.Println("Server started")
-	initData()
-	startServer()
+	printDir()
+	//- initData()
+	//- startServer()
 	// wget -qO- http://localhost:8080
 }
 
