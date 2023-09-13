@@ -1,4 +1,4 @@
-package main
+package spinner
 
 import (
 	"html/template"
@@ -80,7 +80,7 @@ func startServer() {
 	}
 }
 
-func main() {
+func appInit() {
 	log.Println("Server started")
 	printDir()
 	//- initData()
