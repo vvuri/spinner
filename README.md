@@ -53,3 +53,15 @@ slide2 markdown
 15. Prometheus + Grafana
 16. Linter
 17. Tests
+
+### Step by step
+1. main
+   - TODO: init config: cleanenv
+   - TODO: init logger: slog
+   - TODO: init storage: sqlite
+   - TODO: init router: chi, chi render
+   - TODO: init server
+2. ```go get -u github.com/ilyakaznacheev/cleanenv```
+3. Must в имени функции означает, что можно паниковать если не сработает
+4. 
+5. 

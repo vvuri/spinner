@@ -1,4 +1,4 @@
-package spinner
+package insta
 
 import (
 	"html/template"

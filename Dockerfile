@@ -5,7 +5,7 @@ ADD go.mod .
 RUN go mod download
 COPY ./cmd ./cmd
 #COPY ./web/ ./web/
-RUN go build -o app ./cmd/main/app.go
+RUN go build -o app ./cmd/spinner/app.go
 
 FROM alpine
 #RUN apk update --no-cache && apk add --no-cache ca-certificates
