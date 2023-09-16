@@ -63,5 +63,8 @@ slide2 markdown
    - TODO: init server
 2. ```go get -u github.com/ilyakaznacheev/cleanenv```
 3. Must в имени функции означает, что можно паниковать если не сработает
-4. 
-5. 
+4. ```$env:CGO_ENABLED=1``` - для работы с БД SQLITE
+5. Disable CGO
+   - Open File -> Settings -> Go -> Vendoring & Build Tags
+   - Set CGO Support to Disabled
+6. r
