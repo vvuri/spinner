@@ -64,7 +64,16 @@ slide2 markdown
 2. ```go get -u github.com/ilyakaznacheev/cleanenv```
 3. Must в имени функции означает, что можно паниковать если не сработает
 4. ```$env:CGO_ENABLED=1``` - для работы с БД SQLITE
-5. Disable CGO
    - Open File -> Settings -> Go -> Vendoring & Build Tags
    - Set CGO Support to Disabled
-6. r
+   - метод не рабочий
+5. Альтернатива без CGO это ```go get modernc.org/sqlite``` но методы другие - отказался
+6. Скачал и истановил [x86_64-13.1.0-release-posix-seh-msvcrt-rt_v11-rev1.7z](https://github.com/niXman/mingw-builds-binaries/releases)
+   антивирус помещает в карантин - добавлять исключения 
+   ```bash 
+   $ gcc --version
+   gcc.exe (x86_64-posix-seh-rev1, Built by MinGW-Builds project) 13.1.0 
+   ```
+7. 
+
+
