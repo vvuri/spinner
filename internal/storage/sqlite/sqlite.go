@@ -67,22 +67,15 @@ func (s *Storage) GetURL(alias string) (string, error) {
 	const fn = "storage.sqlite.GetURL"
 	var url string
 
-	stmt, err := s.db.Prepare(`
-		SELECT url FROM url WHERE alias=?
-	`)
-	if err != nil {
+	sqlStatement := `SELECT url FROM url WHERE alias=$1 LIMIT 1;`
+	row := s.db.QueryRow(sqlStatement, alias)
+
+	switch err := row.Scan(&url); err {
+	case sql.ErrNoRows:
+		return "", nil
+	case nil:
+		return url, nil
+	default:
 		return "", fmt.Errorf("%s: %w", fn, err)
 	}
-
-	resp, err := stmt.Query()
-	if err != nil {
-		return "", fmt.Errorf("%s: %w", fn, err)
-	}
-
-	err = resp.Scan(&url)
-	if err != nil {
-		return "", fmt.Errorf("%s: %w", fn, err)
-	}
-
-	return url, nil
 }
