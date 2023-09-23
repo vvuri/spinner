@@ -1,9 +1,12 @@
 package main
 
 import (
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"log/slog"
 	"os"
 	"spinner/internal/config"
+	"spinner/internal/http-server/middleware/logger"
 	"spinner/internal/lib/logger/sl"
 	"spinner/internal/storage/sqlite"
 )
@@ -41,7 +44,14 @@ func main() {
 	}
 	log.Info(query)
 
-	// TODO: init router: chi, chi render
+	router := chi.NewRouter()
+
+	// добавляем к кождому запросу request-id
+	router.Use(middleware.RequestID)
+	// router.Use(middleware.Logger)
+	router.Use(logger.New(log))
+	router.Use(middleware.Recoverer)
+	router.Use(middleware.URLFormat)
 
 	// TODO: init server
 }

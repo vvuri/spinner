@@ -74,6 +74,6 @@ slide2 markdown
    $ gcc --version
    gcc.exe (x86_64-posix-seh-rev1, Built by MinGW-Builds project) 13.1.0 
    ```
-7. 
-
+7. Add router ```go get github.com/go-chi/chi/v5```
+ 
 

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"spinner/internal/storage"
 )
 
 type Storage struct {
@@ -72,10 +73,16 @@ func (s *Storage) GetURL(alias string) (string, error) {
 
 	switch err := row.Scan(&url); err {
 	case sql.ErrNoRows:
-		return "", nil
+		return "", storage.ErrURLNotFound
 	case nil:
 		return url, nil
 	default:
 		return "", fmt.Errorf("%s: %w", fn, err)
 	}
+}
+
+// TODO: Delete
+func (s *Storage) DeleteURL(alias string) error {
+	const fn = "storage.sqlite.DeleteURL"
+
 }
