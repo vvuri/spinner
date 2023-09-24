@@ -75,5 +75,11 @@ slide2 markdown
    gcc.exe (x86_64-posix-seh-rev1, Built by MinGW-Builds project) 13.1.0 
    ```
 7. Add router ```go get github.com/go-chi/chi/v5```
+8. Add render chi ```go get github.com/go-chi/render```
+9. Add validator 
+   - ```go get github.com/go-playground/validator/v10```
+   - in struct ```validate:"required,url"```
+   - in code ```validator.New().Struct(req)```
+10. 
  
 
