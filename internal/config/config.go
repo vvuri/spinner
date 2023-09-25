@@ -12,6 +12,7 @@ type Config struct {
 	Env         string     `yaml:"env" env:"Env" default:"local"`
 	StoragePath string     `yaml:"storage_path" default:"./storage/storage.db"`
 	HttpServer  HttpServer `yaml:"http_server"`
+	AliasLength int        `yaml:"alias_length" default:"5"`
 }
 
 type HttpServer struct {

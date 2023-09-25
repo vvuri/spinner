@@ -7,6 +7,7 @@ import (
 	"golang.org/x/exp/slog"
 	"net/http"
 	resp "spinner/internal/lib/api/response"
+	"spinner/internal/lib/random"
 )
 
 type Request struct {
@@ -23,7 +24,7 @@ type URLSaver struct {
 	SaveURL(urlToSave string, alias string) error
 }
 
-func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
+func New(log *slog.Logger, urlSaver URLSaver, aliasLength int8) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const ap = "handlers.url.save.New"
 
@@ -52,5 +53,13 @@ func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
 
 			return
 		}
+
+		alias := req.Alias
+		if alias == "" {
+			alias = random.NewRandomString(aliasLength)
+			log.Info("alias for", urlSaver, "is", alias)
+		}
+
+		
 	}
 }
