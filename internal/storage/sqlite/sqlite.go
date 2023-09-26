@@ -85,4 +85,5 @@ func (s *Storage) GetURL(alias string) (string, error) {
 func (s *Storage) DeleteURL(alias string) error {
 	const fn = "storage.sqlite.DeleteURL"
 
+	return nil
 }

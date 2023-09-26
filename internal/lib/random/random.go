@@ -9,7 +9,7 @@ func NewRandomString(aliasLength int) string {
 	var letters = []byte("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	lenLetter := len(letters)
 
-	rnd := rand.New(rand.NewSource(uint64(time.Now().UnixMilli())))
+	rnd := rand.New(rand.NewSource(uint64(time.Now().UnixNano())))
 
 	alias := make([]byte, aliasLength)
 	for i := 0; i < aliasLength; i++ {

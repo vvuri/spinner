@@ -1,6 +1,7 @@
 package save
 
 import (
+	"errors"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
@@ -8,6 +9,7 @@ import (
 	"net/http"
 	resp "spinner/internal/lib/api/response"
 	"spinner/internal/lib/random"
+	"spinner/internal/storage"
 )
 
 type Request struct {
@@ -24,7 +26,7 @@ type URLSaver struct {
 	SaveURL(urlToSave string, alias string) error
 }
 
-func New(log *slog.Logger, urlSaver URLSaver, aliasLength int8) http.HandlerFunc {
+func New(log *slog.Logger, urlSaver URLSaver, aliasLength int) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const ap = "handlers.url.save.New"
 
@@ -60,6 +62,27 @@ func New(log *slog.Logger, urlSaver URLSaver, aliasLength int8) http.HandlerFunc
 			log.Info("alias for", urlSaver, "is", alias)
 		}
 
-		
+		err = urlSaver.SaveURL(req.URL, alias)
+		if errors.Is(err, storage.ErrURLExists) {
+			log.Info("url already exist", alias)
+
+			render.JSON(w, r, resp.Error("url already exist"))
+
+			return
+		}
+		if err !=nil {
+			log.Error("failed to add url", err)
+
+			render.JSON(w, r, resp.Error("failed to add url"))
+
+			return
+		}
+
+		log.Info("url added to DB")
+
+		render.JSON(w, r, Response{
+			Response: resp.Ok(),
+			Alias: alias,
+		})
 	}
 }
