@@ -80,6 +80,7 @@ slide2 markdown
    - ```go get github.com/go-playground/validator/v10```
    - in struct ```validate:"required,url"```
    - in code ```validator.New().Struct(req)```
-10. 
+10. Add assert for testing ```go get github.com/stretchr/testify/assert```
+11. 
  
 
