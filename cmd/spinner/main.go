@@ -67,11 +67,11 @@ func main() {
 		IdleTimeout:  cfg.HttpServer.IdleTimeout,
 	}
 
+	defer log.Error("server stopped")
+
 	if err := srv.ListenAndServe(); err != nil {
 		log.Error("failed to start server")
 	}
-
-	log.Error("server stopped")
 }
 
 func setupLogger(env string) *slog.Logger {

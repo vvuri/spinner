@@ -81,6 +81,10 @@ slide2 markdown
    - in struct ```validate:"required,url"```
    - in code ```validator.New().Struct(req)```
 10. Add assert for testing ```go get github.com/stretchr/testify/assert```
-11. 
+11. Mock generator:
+    - ```go install github.com/vektra/mockery/v2@v2.34.2```
+    - add to .go file ```//go:generate ...``` for interface
+    - ```//go:generate go run github.com/vektra/mockery/v2@v2.34.2 --name=URLSaver```
+12. r
  
 

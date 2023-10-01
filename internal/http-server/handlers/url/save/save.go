@@ -22,6 +22,7 @@ type Response struct {
 	Alias string `json:"alias,omitempty"`
 }
 
+//go:generate go run github.com/vektra/mockery/v2@v2.34.2 --name=URLSaver
 type URLSaver interface {
 	SaveURL(urlToSave string, alias string) error
 }
