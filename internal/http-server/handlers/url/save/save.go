@@ -5,7 +5,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
-	"golang.org/x/exp/slog"
+	"log/slog"
 	"net/http"
 	resp "spinner/internal/lib/api/response"
 	"spinner/internal/lib/random"
@@ -22,7 +22,7 @@ type Response struct {
 	Alias string `json:"alias,omitempty"`
 }
 
-type URLSaver struct {
+type URLSaver interface {
 	SaveURL(urlToSave string, alias string) error
 }
 
@@ -33,7 +33,7 @@ func New(log *slog.Logger, urlSaver URLSaver, aliasLength int) http.HandlerFunc 
 		log = log.With(
 			slog.String("ap", ap),
 			slog.String("request_id", middleware.GetReqID(r.Context())),
-			)
+		)
 
 		var req Request
 
@@ -70,7 +70,7 @@ func New(log *slog.Logger, urlSaver URLSaver, aliasLength int) http.HandlerFunc 
 
 			return
 		}
-		if err !=nil {
+		if err != nil {
 			log.Error("failed to add url", err)
 
 			render.JSON(w, r, resp.Error("failed to add url"))
@@ -82,7 +82,7 @@ func New(log *slog.Logger, urlSaver URLSaver, aliasLength int) http.HandlerFunc 
 
 		render.JSON(w, r, Response{
 			Response: resp.Ok(),
-			Alias: alias,
+			Alias:    alias,
 		})
 	}
 }
