@@ -1,4 +1,4 @@
-package save
+package save_test
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
-	"log/slog"
+	"golang.org/x/exp/slog"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -49,11 +49,9 @@ func TestSaveHandler(t *testing.T) {
 		},
 	}
 
-	var log *slog.Logger
-	log = slog.New(
-		slog.NewTextHandler(
-			os.Stdout,
-			&slog.HandlerOptions{Level: slog.LevelDebug}))
+	// TODO: mock log
+	log := slog.New(
+		slog.NewTextHandler(os.Stdout, nil))
 
 	for _, tc := range cases {
 		urlSaverMock := mocks.NewURLSaver(t)
@@ -79,8 +77,8 @@ func TestSaveHandler(t *testing.T) {
 		body := rr.Body.String()
 
 		var resp save.Response
-
 		require.NoError(t, json.Unmarshal([]byte(body), &resp))
 
+		// TODO: Add check fields
 	}
 }

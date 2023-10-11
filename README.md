@@ -85,6 +85,9 @@ slide2 markdown
     - ```go install github.com/vektra/mockery/v2@v2.34.2```
     - add to .go file ```//go:generate ...``` for interface
     - ```//go:generate go run github.com/vektra/mockery/v2@v2.34.2 --name=URLSaver```
-12. r
+12. Add testify:
+    - ```go get github.com/stretchr/testify```
+    - ```go get github.com/stretchr/testify/mock```
+13. 
  
 
