@@ -12,35 +12,36 @@ var la, lb, islands int
 
 func findIsland(i int, j int) bool {
 	isIsland := true
-	if maps[i][j] == 3 {
-		return false
-	}
+	//if maps[i][j] > 2 {
+	//	return true
+	//}
+
 	maps[i][j] = 3 + islands
 
 	if i == 0 || i == la-1 || j == 0 || j == lb-1 {
-		return false
+		isIsland = false
 	}
 
-	if maps[i-1][j] == 0 {
-		if !findIsland(i-1, j) {
+	if j != lb-1 && maps[i][j+1] == 0 {
+		if !findIsland(i, j+1) {
 			isIsland = false
 		}
 	}
 
-	if maps[i][j-1] == 0 {
-		if !findIsland(i, j-1) {
-			isIsland = false
-		}
-	}
-
-	if maps[i+1][j] == 0 {
+	if i != la-1 && maps[i+1][j] == 0 {
 		if !findIsland(i+1, j) {
 			isIsland = false
 		}
 	}
 
-	if maps[i][j+1] == 0 {
-		if !findIsland(i, j+1) {
+	if j != 0 && maps[i][j-1] == 0 {
+		if !findIsland(i, j-1) {
+			isIsland = false
+		}
+	}
+
+	if i != 0 && maps[i-1][j] == 0 {
+		if !findIsland(i-1, j) {
 			isIsland = false
 		}
 	}
@@ -63,18 +64,14 @@ func printMap() {
 func closedIsland(grid [][]int) int {
 	maps = grid
 	la, lb = len(maps), len(maps[0])
-	//islands := 0
+	islands = 0
 
 	for i := 1; i < la-1; i++ {
 		for j := 1; j < lb-1; j++ {
 			if maps[i][j] == 0 {
-				if maps[i-1][j] == 1 && maps[i][j-1] == 1 {
-					if findIsland(i, j) {
-						islands++
-						printMap()
-					}
-				} else {
-					maps[i][j] = 3
+				if findIsland(i, j) {
+					islands++
+					printMap()
 				}
 			}
 		}
@@ -112,6 +109,32 @@ func TestClosedIslands19(t *testing.T) {
 		{1, 0, 1, 0, 1},
 		{1, 0, 0, 0, 1},
 		{0, 1, 1, 1, 0},
+	}
+	assert.Equal(t, closedIsland(grid), 1)
+}
+
+func TestClosedIslands0(t *testing.T) {
+	grid := [][]int{
+		{0, 0, 1, 0, 1, 0, 0, 0, 1},
+		{0, 1, 1, 0, 0, 0, 0, 1, 0},
+		{1, 1, 0, 0, 0, 0, 0, 0, 1},
+		{0, 1, 0, 1, 0, 0, 0, 1, 1},
+		{1, 1, 1, 0, 0, 0, 1, 1, 0},
+		{0, 1, 1, 1, 0, 1, 0, 0, 0},
+		{1, 0, 0, 0, 1, 1, 1, 1, 0},
+	}
+	assert.Equal(t, closedIsland(grid), 0)
+}
+
+func TestClosedIslands1(t *testing.T) {
+	grid := [][]int{
+		{0, 0, 1, 1, 1, 1, 1, 0, 1},
+		{0, 1, 1, 0, 0, 0, 0, 1, 0},
+		{1, 1, 0, 0, 0, 0, 0, 0, 1},
+		{0, 1, 0, 1, 0, 0, 0, 1, 1},
+		{1, 1, 1, 0, 0, 0, 1, 1, 0},
+		{0, 1, 1, 1, 0, 1, 0, 0, 0},
+		{1, 0, 0, 0, 1, 1, 1, 1, 0},
 	}
 	assert.Equal(t, closedIsland(grid), 1)
 }
