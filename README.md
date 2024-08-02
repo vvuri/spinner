@@ -88,6 +88,10 @@ slide2 markdown
 12. Add testify:
     - ```go get github.com/stretchr/testify```
     - ```go get github.com/stretchr/testify/mock```
-13. 
+13. Chi
+    - ```go get -u github.com/go-chi/chi/v5```
+14. Fake data lib
+    - ```go get github.com/brianvoe/gofakeit/v7```
+15. 
  
 
