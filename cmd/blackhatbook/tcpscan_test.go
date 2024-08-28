@@ -3,7 +3,12 @@ package blackhatbook
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
+	"log"
 	"net"
+	"net/http"
+	"net/url"
+	"strings"
 	"sync"
 	"testing"
 )
@@ -64,4 +69,78 @@ func worker(ports chan int, wg *sync.WaitGroup) {
 		fmt.Println(p)
 		wg.Done()
 	}
+}
+
+func TestRequest(t *testing.T) {
+	form := url.Values{}
+	form.Add("foo", "bar")
+	var client http.Client
+	req, err := http.NewRequest(
+		"PUT",
+		"https://www.google.com/robots.txt",
+		strings.NewReader(form.Encode()),
+	)
+	if err != nil {
+		t.Error("Request error: ", err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Error("Response error: ", err)
+	}
+	t.Log(resp.Header, resp.Body)
+}
+
+func TestRequestPut(t *testing.T) {
+	form := url.Values{}
+	form.Add("foo", "bar")
+	var client http.Client
+	req, err := http.NewRequest(
+		"PUT",
+		"https://www.google.com/robots.txt",
+		strings.NewReader(form.Encode()),
+	)
+	if err != nil {
+		t.Error("Request error: ", err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Error("Response error: ", err)
+	}
+	t.Log(resp.Header, resp.Body)
+}
+
+func TestRequestGet(t *testing.T) {
+	var client http.Client
+	req, err := http.NewRequest(
+		"GET",
+		"https://habr.com/robots.txt",
+		nil,
+	)
+	if err != nil {
+		t.Error("Request error: ", err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Error("Response error: ", err)
+	}
+	t.Log(resp.Header)
+	t.Log(resp.Body)
+	t.Log(resp)
+}
+
+func TestRequestGet2(t *testing.T) {
+	resp, err := http.Get("https://habr.com/robots.txt")
+	if err != nil {
+		log.Panicln(err)
+	}
+	// Вывод статуса HTTP
+	fmt.Println(resp.Status)
+
+	// Считывание и отображение тела ответа
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Panicln(err)
+	}
+	fmt.Println(string(body))
+	resp.Body.Close()
 }
